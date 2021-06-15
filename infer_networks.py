@@ -6,6 +6,7 @@ from sklearn.preprocessing import StandardScaler
 import os
 from sklearn.covariance import LedoitWolf
 import matplotlib.pyplot as plt
+from os import makedirs
 
 def precision_matrix_to_partial_corr(theta):
     """
@@ -78,8 +79,10 @@ def run(**params):
     nx.set_node_attributes(G, node_attributes, 'sector')
     G.graph['l'] = l
     nx.write_graphml(G, params['cor_dir'] + "network_over_time_corr_%s.graphml" % 0)
-    nx.write_edgelist(G, params['cor_dir'] + "network_over_time_pecorr_%s.txt" % 0)
+    makedirs(params['cor_dir'] + "edgelists/", exist_ok=True)
+    nx.write_edgelist(G, params['cor_dir'] + "edgelists/" + "network_over_time_pecorr_%s.txt" % 0)
     print("%s non-zero values" % np.count_nonzero(prec))
+    
     np.save(params['workdir'] + "prec_0", prec)
 
     G=nx.from_numpy_matrix(prec)
@@ -88,7 +91,8 @@ def run(**params):
     nx.set_node_attributes(G, node_attributes, 'sector')
     G.graph['l'] = l
     nx.write_graphml(G, params['pcor_dir'] + "network_over_time_prec_%s.graphml" % 0)
-    nx.write_edgelist(G, params['pcor_dir'] + "network_over_time_pacorr_%s.txt" % 0)
+    makedirs(params['pcor_dir'] + "edgelists/", exist_ok=True)
+    nx.write_edgelist(G, params['pcor_dir'] + "edgelists/" + "network_over_time_pacorr_%s.txt" % 0)
 
     par_corr_values = []
     corr_values = []
@@ -120,14 +124,14 @@ def run(**params):
         node_attributes = dict(zip(company_names[list(range(len(company_sectors)))], company_sectors))
         nx.set_node_attributes(G, node_attributes, 'sector')
         nx.write_graphml(G, params['cor_dir'] + "network_over_time_corr_%s.graphml" % x)
-        nx.write_edgelist(G, params['cor_dir'] + "network_over_time_pecorr_%s.txt" % x)
+        nx.write_edgelist(G, params['cor_dir'] + "edgelists/" + "network_over_time_pecorr_%s.txt" % x)
 
         G=nx.from_numpy_matrix(prec)
         G=nx.relabel_nodes(G, dict(zip(G.nodes(), company_names)))
         node_attributes = dict(zip(company_names[list(range(len(company_sectors)))], company_sectors))
         nx.set_node_attributes(G, node_attributes, 'sector')
         nx.write_graphml(G, params['pcor_dir'] + "network_over_time_prec_%s.graphml" % x)
-        nx.write_edgelist(G, params['pcor_dir'] + "network_over_time_pacorr_%s.txt" % x)
+        nx.write_edgelist(G, params['pcor_dir'] + "edgelists/" + "network_over_time_pacorr_%s.txt" % x)
 
     plt.figure()
     plt.hist(corr_values)
