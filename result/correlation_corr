@@ -1,0 +1,8 @@
+Correlation between degree centrality and Sharpe Ratio: (corr)
+SpearmanrResult(correlation=nan, pvalue=nan)
+Correlation between degree centrality and risks 
+SpearmanrResult(correlation=-0.5077372016995237, pvalue=0.0)
+Correlation between eigenvector centrality and Sharpe Ratio:
+SpearmanrResult(correlation=nan, pvalue=nan)
+Correlation between eigenvector centrality and risks
+SpearmanrResult(correlation=-0.5110605416979129, pvalue=0.0)

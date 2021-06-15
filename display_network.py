@@ -14,7 +14,7 @@ import operator
 import matplotlib
 import statsmodels.tsa.stattools
 from sklearn.preprocessing import StandardScaler
-import modularity_maximizer
+#import modularity_maximizer
 from statsmodels.stats import multitest
 
 def threshold_graph(G):
@@ -37,7 +37,7 @@ def threshold_graph(G):
 
 
 # Change this if you wish to analyze either correlation or partial correlation networks
-networks_folder = "networks_lw/"
+networks_folder = "partial-graphml/"
 onlyfiles = [os.path.abspath(os.path.join(networks_folder, f)) for f in os.listdir(networks_folder) if os.path.isfile(os.path.join(networks_folder, f))]
 #onlyfiles = onlyfiles[0:1]
 #onlyfiles = list(map(lambda x: os.path.splitext(x)[0], onlyfiles))
