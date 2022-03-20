@@ -52,7 +52,7 @@ def run(**params):
     slide_size = 30
     no_samples = X.shape[0]
     p = X.shape[1]
-    no_runs = math.floor((no_samples - window_size)/ (slide_size))
+    no_runs = math.floor((no_samples - window_size) / (slide_size))
     print("We're running %s times" % no_runs)
 
     X_new = X[0:window_size, :]

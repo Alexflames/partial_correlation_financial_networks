@@ -100,6 +100,8 @@ def get_sector_full_nice_name(sector):
     """       
     if sector == "technology":
         return "Technology + Communication Services"
+    elif sector == 'communication_services':
+        return "Technology + Communication Services"
     elif sector == "real_estate":
         return "Real Estate"
     elif sector == "basic_materials":
@@ -143,7 +145,7 @@ def run(**params):
     slide_size = 30
     no_samples = X.shape[0]
     p = X.shape[1]
-    no_runs = math.floor((no_samples - window_size)/ (slide_size))
+    no_runs = math.floor((no_samples - window_size) / (slide_size))
     dates = []
 
     for x in range(no_runs-1):
@@ -231,7 +233,18 @@ def run(**params):
             centralities_degree[i*number_companies:(i+1)*number_companies] = degree_centrality
             risks[i*number_companies:(i+1)*number_companies] = risk.flatten()
             centralities_eigv[i*number_companies:(i+1)*number_companies] = eigv_centrality
+        
+        f = open(params['output_dest']+'eigv_centralities_'+network_type, 'w')
+        for company_name in company_names:
+            f.write(company_name + ';')
+        f.write('\n')
 
+        for i in range(len(Graphs)):
+            for j in range(number_companies):
+                f.write(str(centralities_eigv[i*number_companies + j]) + ';')
+            f.write('\n')
+        f.close()
+    
         f = open(params['output_dest']+'correlation_'+network_type, 'w')
         f.write("Correlation between degree centrality and Sharpe Ratio: (" + network_type + ")\n")
         f.write(str(spearmanr(centralities_degree, sharpe_ratios)))
